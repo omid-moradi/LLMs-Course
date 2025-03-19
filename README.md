@@ -5,7 +5,7 @@ This repository contains the first assignment of the **Large Language Models (LL
 ## About the Course
 This repository contains projects completed as part of the Large Language Models (LLMs) course at the University of Tehran (Spring 2025).
 
-## Assignment 1
+## CA1
 **Objective:**
 In this assignment, students are required to analyze a pre-trained language model and evaluate its text generation and response capabilities. The assignment includes the following steps:
 
