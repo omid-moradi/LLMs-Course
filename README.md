@@ -1,6 +1,6 @@
 # Large Language Models (LLMs) Course Projects - University of Tehran (Spring 2025)
 
-This repository contains projects completed as part of the Large Language Models (LLMs) course at the University of Tehran (Spring 2025). The projects cover a range of topics related to LLMs, including word embeddings, fine-tuning, retrieval-augmented generation, reinforcement learning from human feedback (Alignment), and more.
+This repository contains projects completed as part of the **Large Language Models (LLMs)** course at the University of Tehran (Spring 2025). The projects cover a range of topics related to LLMs, including word embeddings, fine-tuning, retrieval-augmented generation, reinforcement learning from human feedback (Alignment), and more.
 
 ## Projects
 
