@@ -1,0 +1,20 @@
+{
+    "0": "SELECT\n  T1.atom_id,\n  T1.atom_id2\nFROM connected AS T1\nINNER JOIN bond AS T2\n  ON T1.bond_id = T2.bond_id\nINNER JOIN molecule AS T3\n  ON T2.molecule_id = T3.molecule_id\nWHERE\n  T3.label = '-';\t----- bird -----\ttoxicology",
+    "1": "SELECT T1.element, T2.label\nFROM atom AS T1\nINNER JOIN molecule AS T2\n  ON T1.molecule_id = T2.molecule_id\nWHERE\n  T1.molecule_id = 'TR060';\t----- bird -----\ttoxicology",
+    "2": "\t----- bird -----\ttoxicology",
+    "3": "SELECT DISTINCT T3.element\nFROM bond AS T1\nINNER JOIN connected AS T2\n  ON T1.bond_id = T2.bond_id\nINNER JOIN atom AS T3\n  ON T2.atom_id = T3.atom_id OR T2.atom_id2 = T3.atom_id\nWHERE\n  T1.bond_id = 'TR001_10_11';\t----- bird -----\ttoxicology",
+    "4": "SELECT DISTINCT\n  T1.molecule_id\nFROM molecule AS T1\nINNER JOIN bond AS T2\n  ON T1.molecule_id = T2.molecule_id\nINNER JOIN atom AS T3\n  ON T1.molecule_id = T3.molecule_id\nWHERE\n  T2.bond_type = '#' AND T3.element = 'c' AND T1.label = '-'\nLIMIT 2;\t----- bird -----\ttoxicology",
+    "5": "SELECT\n  CAST(SUM(CASE WHEN bond_type = '-' THEN 1 ELSE 0 END) AS REAL) * 100 / COUNT(bond_id)\nFROM bond;\t----- bird -----\ttoxicology",
+    "6": "SELECT\n  (\n    COUNT(CASE WHEN T2.alignment = 'Bad' THEN T1.id END) * 100.0\n  ) / COUNT(T1.id) AS percentage_bad_alignment,\n  COUNT(\n    CASE WHEN T2.alignment = 'Bad' AND T3.publisher_name = 'Marvel Comics' THEN T1.id END\n  ) AS marvel_bad_alignment_count\nFROM superhero AS T1\nINNER JOIN alignment AS T2\n  ON T1.alignment_id = T2.id\nLEFT JOIN publisher AS T3\n  ON T1.publisher_id = T3.id;\t----- bird -----\tsuperhero",
+    "7": "SELECT DISTINCT\n  sp.power_name\nFROM superpower AS sp\nJOIN hero_power AS hp\n  ON sp.id = hp.power_id\nJOIN superhero AS sh\n  ON hp.hero_id = sh.id\nJOIN gender AS g\n  ON sh.gender_id = g.id\nWHERE\n  g.gender = 'Male'\nLIMIT 5;\t----- bird -----\tsuperhero",
+    "8": "SELECT superhero_name\nFROM superhero\nWHERE height_cm BETWEEN 170 AND 190 AND eye_colour_id = 1;\t----- bird -----\tsuperhero",
+    "9": "SELECT\n  COUNT(s.id)\nFROM superhero AS s\nJOIN publisher AS p\n  ON s.publisher_id = p.id\nWHERE\n  p.publisher_name = 'Dark Horse Comics';\t----- bird -----\tsuperhero",
+    "10": "SELECT\n  T2.race,\n  T3.alignment\nFROM superhero AS T1\nINNER JOIN race AS T2\nON T1.race_id = T2.id\nINNER JOIN alignment AS T3\nON T1.alignment_id = T3.id\nWHERE\n  T1.superhero_name = 'Cameron Hicks';\t----- bird -----\tsuperhero",
+    "11": "\t----- bird -----\tsuperhero",
+    "12": "SELECT\n  AVG(T1.cost)\nFROM expense AS T1\nINNER JOIN member AS T2\n  ON T1.link_to_member = T2.member_id\nWHERE\n  T2.first_name = 'Elijah' AND T2.last_name = 'Allen' AND (\n    STRFTIME('%m', T1.expense_date) = '09' OR STRFTIME('%m', T1.expense_date) = '10'\n  );\t----- bird -----\tstudent_club",
+    "13": "SELECT\n  T1.first_name,\n  T1.last_name\nFROM member AS T1\nINNER JOIN income AS T2\n  ON T1.member_id = T2.link_to_member\nWHERE\n  T2.source = 'Dues' AND T2.date_received = (\n    SELECT\n      MIN(date_received)\n    FROM income\n    WHERE\n      source = 'Dues'\n  );\t----- bird -----\tstudent_club",
+    "14": "SELECT\n  SUM(CASE WHEN T3.event_name = 'Yearly Kickoff' THEN T1.cost ELSE 0 END) * 100.0 / SUM(T1.cost)\nFROM expense AS T1\nINNER JOIN budget AS T2\n  ON T1.link_to_budget = T2.budget_id\nINNER JOIN event AS T3\n  ON T2.link_to_event = T3.event_id;\t----- bird -----\tstudent_club",
+    "15": "SELECT\n  T1.event_name\nFROM event AS T1\nINNER JOIN budget AS T2\n  ON T1.event_id = T2.link_to_event\nWHERE\n  T2.category = 'Advertisement'\nORDER BY\n  T2.spent DESC\nLIMIT 1;\t----- bird -----\tstudent_club",
+    "16": "SELECT\n  COUNT(income_id)\nFROM income\nWHERE\n  amount = 50;\t----- bird -----\tstudent_club",
+    "17": "SELECT\n  T1.event_name,\n  T1.event_date\nFROM event AS T1\nINNER JOIN budget AS T2\n  ON T1.event_id = T2.link_to_event\nINNER JOIN expense AS T3\n  ON T2.budget_id = T3.link_to_budget\nWHERE\n  T3.expense_description = 'Pizza' AND T3.cost > 50 AND T3.cost < 100;\t----- bird -----\tstudent_club"
+}
