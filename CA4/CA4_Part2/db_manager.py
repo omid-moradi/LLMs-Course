@@ -110,6 +110,60 @@ class DBManager:
                 row_values = ", ".join([str(value) for value in row.values()])
                 head += f'Row Values: ({row_values})\n'
         return head
+    
+
+    def get_foreign_keys(self, db_name: str, table_name: str):
+        """
+        Extracts and resolves foreign key relations for a specific table from the loaded BIRD schema.
+        """
+        if db_name not in self.bird_schema:
+            return f"Database '{db_name}' not found."
+
+        db_info = self.bird_schema[db_name]
+        
+        try:
+            table_index = db_info['table_names_original'].index(table_name)
+        except ValueError:
+            return f"Table '{table_name}' not found in database '{db_name}'."
+
+        relations = []
+        for fk in db_info['foreign_keys']:
+            from_col_index, to_col_index = fk
+
+            from_table_index = db_info['column_names'][from_col_index][0]
+            from_col_name = db_info['column_names_original'][from_col_index][1]
+
+            if from_table_index == table_index:
+                to_table_index = db_info['column_names'][to_col_index][0]
+                to_table_name = db_info['table_names_original'][to_table_index]
+                to_col_name = db_info['column_names_original'][to_col_index][1]
+
+                relations.append({
+                    'from_column': from_col_name,
+                    'target_table': to_table_name,
+                    'target_column': to_col_name
+                })
+        
+        return relations
+    
+
+    def get_table_schema(self, table_name: str, db_name: str) -> str:
+        """Gets the CREATE TABLE statement for a specific table."""
+        query = f"SELECT sql FROM sqlite_master WHERE type='table' AND name='{table_name}';"
+        result = self.query(query, db_name)
+        if result and result[0]:
+            return result[0]['sql']
+        return f"Schema for table '{table_name}' not found."
+    
+
+    def get_related_tables(self, db_name: str, table_name: str) -> list:
+        """Finds tables related to a given table via foreign keys."""
+        relations = self.get_foreign_keys(db_name, table_name)
+        if not isinstance(relations, list):
+            return []
+        
+        related_tables = {rel['target_table'] for rel in relations}
+        return list(related_tables)
 
 def dict_factory(cursor, row):
     d = {}
