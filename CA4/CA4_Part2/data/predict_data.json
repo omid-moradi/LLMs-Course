@@ -1,20 +1,7 @@
 {
-    "0": "SELECT\n  T1.atom_id,\n  T1.atom_id2\nFROM connected AS T1\nINNER JOIN bond AS T2\n  ON T1.bond_id = T2.bond_id\nINNER JOIN molecule AS T3\n  ON T2.molecule_id = T3.molecule_id\nWHERE\n  T3.label = '-';\t----- bird -----\ttoxicology",
-    "1": "SELECT T1.element, T2.label FROM atom AS T1 JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T1.molecule_id = 'TR060';\t----- bird -----\ttoxicology",
-    "2": "\t----- bird -----\ttoxicology",
-    "3": "SELECT DISTINCT T3.element\nFROM bond AS T1\nINNER JOIN connected AS T2\n  ON T1.bond_id = T2.bond_id\nINNER JOIN atom AS T3\n  ON T2.atom_id = T3.atom_id\nWHERE\n  T1.bond_id = 'TR001_10_11'\nUNION\nSELECT DISTINCT T3.element\nFROM bond AS T1\nINNER JOIN connected AS T2\n  ON T1.bond_id = T2.bond_id\nINNER JOIN atom AS T3\n  ON T2.atom_id2 = T3.atom_id\nWHERE\n  T1.bond_id = 'TR001_10_11';\t----- bird -----\ttoxicology",
-    "4": "SELECT T1.molecule_id\nFROM molecule AS T1\nINNER JOIN atom AS T2\n  ON T1.molecule_id = T2.molecule_id\nINNER JOIN bond AS T3\n  ON T1.molecule_id = T3.molecule_id\nWHERE\n  T2.element = 'c' AND T3.bond_type = '#' AND T1.label = '-'\nLIMIT 2;\t----- bird -----\ttoxicology",
-    "5": "SELECT\n  CAST(SUM(CASE WHEN bond_type = '-' THEN 1 ELSE 0 END) AS REAL) * 100.0 / COUNT(bond_id)\nFROM bond;\t----- bird -----\ttoxicology",
-    "6": "\t----- bird -----\tsuperhero",
-    "7": "SELECT DISTINCT\n  T3.power_name\nFROM gender AS T1\nINNER JOIN superhero AS T2\n  ON T1.id = T2.gender_id\nINNER JOIN hero_power AS T4\n  ON T2.id = T4.hero_id\nINNER JOIN superpower AS T3\n  ON T4.power_id = T3.id\nWHERE\n  T1.gender = 'Male'\nLIMIT 5;\t----- bird -----\tsuperhero",
-    "8": "SELECT superhero_name\nFROM superhero\nWHERE height_cm BETWEEN 170 AND 190 AND eye_colour_id = 1;\t----- bird -----\tsuperhero",
-    "9": "SELECT\n  COUNT(T1.id)\nFROM superhero AS T1\nINNER JOIN publisher AS T2\n  ON T1.publisher_id = T2.id\nWHERE\n  T2.publisher_name = 'Dark Horse Comics';\t----- bird -----\tsuperhero",
-    "10": "SELECT T2.race, T3.alignment FROM superhero AS T1 INNER JOIN race AS T2 ON T1.race_id = T2.id INNER JOIN alignment AS T3 ON T1.alignment_id = T3.id WHERE T1.superhero_name = 'Cameron Hicks';\t----- bird -----\tsuperhero",
-    "11": "\t----- bird -----\tsuperhero",
-    "12": "SELECT\n  AVG(T1.cost)\nFROM expense AS T1\nINNER JOIN member AS T2\n  ON T1.link_to_member = T2.member_id\nWHERE\n  T2.first_name = 'Elijah' AND T2.last_name = 'Allen' AND (\n    STRFTIME('%m', T1.expense_date) = '09' OR STRFTIME('%m', T1.expense_date) = '10'\n  );\t----- bird -----\tstudent_club",
-    "13": "SELECT\n  T2.first_name,\n  T2.last_name\nFROM income AS T1\nINNER JOIN member AS T2\n  ON T1.link_to_member = T2.member_id\nWHERE\n  T1.source = 'Dues'\nORDER BY\n  T1.date_received\nLIMIT 1;\t----- bird -----\tstudent_club",
-    "14": "SELECT\n  SUM(CASE WHEN T1.event_name = 'Yearly Kickoff' THEN T2.cost ELSE 0 END) * 100.0 / SUM(T2.cost)\nFROM event AS T1\nINNER JOIN expense AS T2\n  ON T1.event_id = T2.link_to_event;\t----- bird -----\tstudent_club",
-    "15": "SELECT T1.event_name\nFROM event AS T1\nINNER JOIN budget AS T2\n  ON T1.event_id = T2.link_to_event\nWHERE\n  T2.category = 'Advertisement'\nORDER BY\n  T2.spent DESC\nLIMIT 1;\t----- bird -----\tstudent_club",
-    "16": "SELECT count(*) FROM income WHERE amount = 50;\t----- bird -----\tstudent_club",
-    "17": "SELECT DISTINCT\n  T1.event_name,\n  T1.event_date\nFROM event AS T1\nINNER JOIN budget AS T2\n  ON T1.event_id = T2.link_to_event\nINNER JOIN expense AS T3\n  ON T2.budget_id = T3.link_to_budget\nWHERE\n  T3.expense_description = 'Pizza' AND T3.cost > 50 AND T3.cost < 100;\t----- bird -----\tstudent_club"
+    "0": "\t----- bird -----\ttoxicology",
+    "1": "SELECT\n  CAST(SUM(CASE WHEN bond_type = '-' THEN 1 ELSE 0 END) AS REAL) * 100 / COUNT(bond_id)\nFROM bond;\t----- bird -----\ttoxicology",
+    "2": "\t----- bird -----\tsuperhero",
+    "3": "SELECT\n  CAST(SUM(CASE WHEN e.event_name = 'Yearly Kickoff' THEN ex.cost ELSE 0 END) AS REAL) * 100 / SUM(ex.cost)\nFROM event AS e\nJOIN budget AS b\n  ON e.event_id = b.link_to_event\nJOIN expense AS ex\n  ON b.budget_id = ex.link_to_budget;\t----- bird -----\tstudent_club",
+    "4": "SELECT\n  T1.event_name,\n  T1.event_date\nFROM event AS T1\nINNER JOIN budget AS T2\n  ON T1.event_id = T2.link_to_event\nINNER JOIN expense AS T3\n  ON T2.budget_id = T3.link_to_budget\nWHERE\n  T3.expense_description = 'Pizza' AND T3.cost > 50 AND T3.cost < 100;\t----- bird -----\tstudent_club"
 }
